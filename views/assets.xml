@@ -1,0 +1,14 @@
+<odoo>
+    <template id="assets_backend" name="Custom Kanban CSS" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/book_managment/static/src/css/custom_kanban.css"/>
+        </xpath>
+    </template>
+<!--    <template id="assets_backend" name="Custom Calender CSS" inherit_id="web.assets_backend">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <link rel="stylesheet" type="text/scss" href="/book_managment/static/src/css/custom_calendar.css"/>-->
+
+<!--            <script type="text/javascript" src="/book_managment/static/src/js/calendar_color.js"></script>-->
+<!--        </xpath>-->
+<!--    </template>-->
+</odoo>

@@ -1,0 +1,24 @@
+.oe_rental_draft {
+    background-color: #FFD700 !important; /* Gold for Draft */
+    color: white;
+}
+
+.oe_rental_waiting {
+    background-color: #FFA500 !important; /* Orange for Waiting */
+    color: white;
+}
+
+.oe_rental_ongoing {
+    background-color: #FF0000 !important; /* Red for Ongoing */
+    color: white;
+}
+
+.oe_rental_returned {
+    background-color: #00FF00 !important; /* Green for Returned */
+    color: white;
+}
+
+.oe_rental_rejected {
+    background-color: #808080 !important; /* Gray for Rejected */
+    color: white;
+}

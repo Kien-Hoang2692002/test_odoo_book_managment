@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!-- Kanban View -->
+    <record id="view_rental_invoice_kanban" model="ir.ui.view">
+        <field name="name">book.rental.invoice.kanban</field>
+        <field name="model">book.rental.invoice</field>
+        <field name="arch" type="xml">
+            <kanban string="Rental Invoice">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_body">
+                                <h3>
+                                    <field name="rental_id"/>
+                                </h3>
+                                <div>
+                                    <strong>Total Rental Price:</strong>
+                                    <field name="total_rental_price"/>
+                                </div>
+                                <div>
+                                    <strong>Payment Status:</strong>
+                                    <field name="payment_status"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_rental_invoice_form" model="ir.ui.view">
+        <field name="name">book.rental.invoice.form</field>
+        <field name="model">book.rental.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Rental Invoice">
+                <sheet>
+                    <group>
+                        <field name="rental_id"/>
+                        <field name="total_rental_price"/>
+                        <field name="payment_status"/>
+                    </group>
+                    <footer>
+                        <button string="Mark as Paid" type="object" name="action_pay_invoice"
+                                attrs="{'invisible': [('payment_status', '=', 'paid')]}"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rental_invoices" model="ir.actions.act_window">
+        <field name="name">Rental Invoices</field>
+        <field name="res_model">book.rental.invoice</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_library_root" name="Library"/>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="menu_book_categ" name="Book Management1" parent="menu_library_root" sequence="1"/>
+
+    <menuitem id="menu_book_categ2" name="Book Management2" parent="menu_book_categ" sequence="1"/>
+    <menuitem id="menu_library_books" name="Books1" parent="menu_book_categ"
+              action="action_books" groups="book.group_book_manager"/>
+    <menuitem id="menu_library_books1" name="Books2" parent="menu_book_categ2" action="action_books"/>
+
+    <menuitem id="menu_library_categ" name="Authors Management" parent="menu_library_root" sequence="1"/>
+    <menuitem id="menu_library_authors" name="Authors" parent="menu_library_categ" action="action_authors"/>
+
+    <menuitem id="menu_library_categories" name="Categories" parent="menu_library_root" action="action_categories"/>
+
+    <menuitem id="menu_library_publishers" name="Publishers" parent="menu_library_root" action="action_publishers"/>
+
+    <menuitem id="menu_library_rentals" name="Rentals" parent="menu_library_root" action="action_rentals"/>
+
+    <menuitem id="menu_library_customers" name="Customers" parent="menu_library_root" action="action_customers"/>
+
+    <menuitem id="menu_rental_invoice" name="Rental Invoices" parent="menu_library_root" action="action_rental_invoices"/>
+</odoo>

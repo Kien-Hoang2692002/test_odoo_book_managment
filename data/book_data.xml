@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="book_default_data" model="book">
+            <field name="name">Test name default</field>
+        </record>
+    </data>
+</odoo>
+
+

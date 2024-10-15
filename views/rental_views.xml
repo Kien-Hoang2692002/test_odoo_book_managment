@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_rental_tree" model="ir.ui.view">
+        <field name="name">rental.tree</field>
+        <field name="model">book.rental</field>
+        <field name="arch" type="xml">
+            <tree string="Rentals">
+                <field name="book_id"/>
+                <field name="customer_id"/>
+                <field name="rental_date"/>
+                <field name="return_date"/>
+                <field name="rental_price"/>
+                <field name="total_rental_price"/>
+                <field name="state"/>
+                <field name="state_rental"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_rental_form" model="ir.ui.view">
+        <field name="name">rental.form</field>
+        <field name="model">book.rental</field>
+        <field name="arch" type="xml">
+            <form string="Rental">
+                <header>
+                    <button name="action_send_for_approval" type="object" string="Send for Approval" states="draft"
+                            class="btn-primary"
+                            groups="book.group_book_user"/>
+                    <button name="action_approve" type="object" string="Approve" states="waiting" class="btn-success"
+                            groups="book.group_book_manager" confirm="Are you sure you want to approve this rental?"/>
+                    <button name="action_reject" type="object" string="Reject" states="waiting" class="btn-danger"
+                            groups="book.group_book_manager" confirm="Are you sure you want to reject this rental?"/>
+                    <button name="action_return" type="object" string="Mark as Returned" states="ongoing"
+                            class="btn-secondary"
+                            groups="book.group_book_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting,ongoing,returned,rejected"
+                           attrs="{'readonly': [('state', '!=', 'draft')], 'invisible': [('state', '=', 'draft')]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="book_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="customer_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="rental_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="return_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+                    <group>
+                        <field name="rental_price" attrs="{'readonly': [('state', '!=', 'draft')]}" readonly="1"/>
+                        <field name="total_rental_price" attrs="{'readonly': [('state', '!=', 'draft')]}" readonly="1"/>
+                        <field name="state" groups="book.group_book_user"
+                               attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_rental_calendar" model="ir.ui.view">
+        <field name="name">book.rental.calendar</field>
+        <field name="model">book.rental</field>
+        <field name="arch" type="xml">
+            <calendar string="Book Rental Calendar" date_start="rental_date" date_stop="return_date" mode="week" color="state">
+                <field name="book_id" string="Book"/>
+                <field name="customer_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_rentals" model="ir.actions.act_window">
+        <field name="name">Rentals</field>
+        <field name="res_model">book.rental</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Track book rental schedules using this calendar.
+            </p>
+        </field>
+    </record>
+
+    <record id="email_template_rental_approved" model="mail.template">
+        <field name="name">Rental Approved Email</field>
+        <field name="model_id" ref="model_book_rental"/>
+        <field name="email_from">${(object.customer_id.email or '')|safe}</field>
+        <field name="email_to">${object.customer_id.email}</field>
+        <field name="subject">Your Rental Request has been Approved</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Dear ${object.customer_id.name},</p>
+            <p>Your request to rent the book <strong>${object.book_id.title}</strong> has been approved.</p>
+            <p>Thank you for using our library!</p>
+            ]]>
+        </field>
+    </record>
+
+</odoo>
