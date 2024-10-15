@@ -81,7 +81,7 @@
     <record id="email_template_rental_approved" model="mail.template">
         <field name="name">Rental Approved Email</field>
         <field name="model_id" ref="model_book_rental"/>
-        <field name="email_from">${(object.customer_id.email or '')|safe}</field>
+        <field name="email_from">${(object.customer_id.email or 'hoatruongquay@gmail.com')|safe}</field>
         <field name="email_to">${object.customer_id.email}</field>
         <field name="subject">Your Rental Request has been Approved</field>
         <field name="body_html">
@@ -91,6 +91,17 @@
             <p>Thank you for using our library!</p>
             ]]>
         </field>
+    </record>
+
+    <record id="cron_auto_update_rental_status" model="ir.cron">
+        <field name="name">Auto Update Rental Status</field>
+        <field name="model_id" ref="model_book_rental"/>
+        <field name="state">code</field>
+        <field name="code">model.auto_update_rental_status()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
     </record>
 
 </odoo>

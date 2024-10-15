@@ -1,5 +1,6 @@
 from odoo import api, models, fields
 from odoo.exceptions import ValidationError
+from datetime import datetime
 
 
 class Rental(models.Model):
@@ -16,6 +17,7 @@ class Rental(models.Model):
                               ('waiting', 'Waiting for Approval'),
                               ('ongoing', 'Ongoing'),
                               ('returned', 'Returned'),
+                              ('overdue', 'Overdue'),
                               ('rejected', 'Rejected')],
                              default='draft')
     state_rental = fields.Selection([('draft', 'Draft'),
@@ -62,9 +64,10 @@ class Rental(models.Model):
         self.state = 'ongoing'
         if self.book_id.quantity_base <= self.book_id.quantity_rental:
             self.book_id.available = False
-
         # Gửi email thông báo cho khách hàng
+        print('Send email')
         template = self.env.ref('book_managment.email_template_rental_approved')
+        print(template)
         if template:
             template.send_mail(self.id, force_send=True)
 
@@ -86,3 +89,11 @@ class Rental(models.Model):
             raise ValidationError("Not enough books available for rental.")
 
         return super(Rental, self).create(vals)
+    
+    @api.model
+    def auto_update_rental_status(self):
+        today = fields.Date.today()
+        overdue_rentals = self.search([('return_date', '<=', today), ('state', '=', 'ongoing')])
+
+        for rental in overdue_rentals:
+            rental.write({'state': 'overdue'})
