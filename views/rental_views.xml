@@ -40,7 +40,7 @@
                 <sheet>
                     <group>
                         <field name="book_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                        <field name="customer_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="customer_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
                         <field name="rental_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         <field name="return_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                     </group>
@@ -78,21 +78,27 @@
         </field>
     </record>
 
+    <!-- Gửi mail -->
     <record id="email_template_rental_approved" model="mail.template">
         <field name="name">Rental Approved Email</field>
         <field name="model_id" ref="model_book_rental"/>
-        <field name="email_from">${(object.customer_id.email or 'hoatruongquay@gmail.com')|safe}</field>
-        <field name="email_to">${object.customer_id.email}</field>
+        <field name="email_from">hoatruongquay@gmail.com</field>
+        <field name="email_to">{{object.customer_id.email}}</field>
         <field name="subject">Your Rental Request has been Approved</field>
         <field name="body_html">
             <![CDATA[
-            <p>Dear ${object.customer_id.name},</p>
-            <p>Your request to rent the book <strong>${object.book_id.title}</strong> has been approved.</p>
-            <p>Thank you for using our library!</p>
+            <p>
+                Dear <t t-esc="object.customer_id.name"/>,
+                <br/><br/>
+                Good job, this is our first e-mail template!
+                <br/>
+            </p>
+            Regards,
             ]]>
         </field>
     </record>
 
+    <!-- Tự động cập nhật trạng thái thuê sau 1 ngày -->
     <record id="cron_auto_update_rental_status" model="ir.cron">
         <field name="name">Auto Update Rental Status</field>
         <field name="model_id" ref="model_book_rental"/>

@@ -29,6 +29,7 @@
             <field name="perm_read" eval="True"/>
             <field name="perm_unlink" eval="True"/>
         </record>
+
         <record id="rental_comp_rule" model="ir.rule">
             <field name="name">Rental Access for Record Owner</field>
             <field name="model_id" ref="model_book_rental"/>
@@ -39,6 +40,7 @@
             <field name="perm_write" eval="True"/>
             <field name="perm_unlink" eval="True"/>
         </record>
+
         <record id="rental_manager_rule" model="ir.rule">
             <field name="name">Rental Access for Managers</field>
             <field name="model_id" ref="model_book_rental"/>
@@ -48,6 +50,16 @@
             <field name="perm_create" eval="True"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="customer_access_same_group_rule" model="ir.rule">
+            <field name="name">Customer Access for Users in the Same Group</field>
+            <field name="model_id" ref="base.model_res_partner"/> 
+            <field name="domain_force">[('create_uid.groups_id', 'in', user.groups_id.ids)]</field>
+            <field name="perm_read" eval="True"/> 
+            <field name="perm_create" eval="False"/> 
+            <field name="perm_write" eval="False"/> 
+            <field name="perm_unlink" eval="False"/> 
         </record>
     </data>
 

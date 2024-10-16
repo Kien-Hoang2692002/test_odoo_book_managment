@@ -1,6 +1,5 @@
 from odoo import api, models, fields
 from odoo.exceptions import ValidationError
-from datetime import datetime
 
 
 class Rental(models.Model):
@@ -64,12 +63,18 @@ class Rental(models.Model):
         self.state = 'ongoing'
         if self.book_id.quantity_base <= self.book_id.quantity_rental:
             self.book_id.available = False
-        # Gửi email thông báo cho khách hàng
-        print('Send email')
+         # Gửi email thông báo cho khách hàng
+        print('Sending email...')
         template = self.env.ref('book_managment.email_template_rental_approved')
-        print(template)
-        if template:
-            template.send_mail(self.id, force_send=True)
+        
+        # Kiểm tra template có tồn tại không
+        if not template:
+            raise ValidationError("Email template not found.")
+        # In ra email của người nhận để kiểm tra
+        print(f"Recipient email: {self.customer_id.email}")
+        # Gửi email
+        template.send_mail(self.id, force_send=True)
+        print('Email sent successfully')
 
     def action_reject(self):
         self.state = 'rejected'
