@@ -40,7 +40,8 @@
                 <sheet>
                     <group>
                         <field name="book_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                        <field name="customer_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                        <field name="customer_id" attrs="{'readonly': [('state', '!=', 'draft')]}" 
+                                groups="book.group_book_user"/>
                         <field name="rental_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         <field name="return_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                     </group>
@@ -59,7 +60,7 @@
         <field name="name">book.rental.calendar</field>
         <field name="model">book.rental</field>
         <field name="arch" type="xml">
-            <calendar string="Book Rental Calendar" date_start="rental_date" date_stop="return_date" mode="week" color="state">
+            <calendar string="Book Rental Calendar" date_start="rental_date" date_stop="return_date" mode="month" color="state">
                 <field name="book_id" string="Book"/>
                 <field name="customer_id"/>
                 <field name="state"/>

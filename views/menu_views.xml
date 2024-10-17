@@ -17,9 +17,10 @@
 
     <menuitem id="menu_library_publishers" name="Publishers" parent="menu_library_root" action="action_publishers"/>
 
-    <menuitem id="menu_library_rentals" name="Rentals" parent="menu_library_root" action="action_rentals"/>
+    <menuitem id="menu_library_rentals" name="Rental Line" parent="menu_library_root" action="action_rentals"/>
+    
+    <menuitem id="menu_rental_invoice" name="Rental Invoices" parent="menu_library_root" action="action_rental_invoices"/>
 
     <menuitem id="menu_library_customers" name="Customers" parent="menu_library_root" action="action_customers"/>
 
-    <menuitem id="menu_rental_invoice" name="Rental Invoices" parent="menu_library_root" action="action_rental_invoices"/>
 </odoo>

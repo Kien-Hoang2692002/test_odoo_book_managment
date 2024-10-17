@@ -5,4 +5,5 @@ from . import publisher
 from . import rental
 from . import customer
 from . import invoice
+from . import rentalline
 
