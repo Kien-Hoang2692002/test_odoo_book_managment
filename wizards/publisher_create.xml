@@ -9,7 +9,7 @@
                     <field name="name"/>
                 </group>
                 <footer>
-                    <button string="Create" type="object" name="create_publisher" class="btn-primary"/>
+                    <button string="Edit" type="object" name="edit_publisher" class="btn-primary"/>
                     <button string="Cancel" special="cancel" class="btn-secondary"/>
                 </footer>
             </form>
@@ -17,7 +17,7 @@
     </record>
 
     <record id="action_publisher_transient" model="ir.actions.act_window">
-        <field name="name">Create Publisher</field>
+        <field name="name">Edit Publisher</field>
         <field name="res_model">publishertransient</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>

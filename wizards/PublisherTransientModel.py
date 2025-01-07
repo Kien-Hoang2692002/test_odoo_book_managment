@@ -1,5 +1,4 @@
 from odoo import api, models, fields
-from odoo.exceptions import ValidationError
 
 class PublisherTransient(models.TransientModel):
     _name = 'publishertransient'
@@ -7,10 +6,16 @@ class PublisherTransient(models.TransientModel):
 
     name = fields.Char(string="Publisher Name")
 
-    def create_publisher(self):
+
+    def edit_publisher(self):
+        active_id = self.env.context.get('active_id')
+        publisher = self.env['publisher'].browse(active_id)
+        if not publisher.exists():
+            raise ValueError(f"Publisher record with ID {active_id} does not exist.")
         if not self.name:
-            raise ValidationError("Publisher Name is required")
-        self.env['publisher'].create({'name': self.name})
+            raise ValueError("The field 'name' is empty.")
+        print(publisher)
+        publisher.write({'name': self.name})
 
 
 
